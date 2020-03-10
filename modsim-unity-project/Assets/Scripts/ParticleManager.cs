@@ -46,7 +46,11 @@ public class ParticleManager : MonoBehaviour
                     viscForce = calculateViscForce(i, j);
                 }
             }
-            gravityForce = new Vector3(0, -1, 0) * particles[i].GetComponent<Particle>().mass * gravityConst;
+            gravityForce = new Vector3(0, -1, 0) * particles[i].GetComponent<Particle>().mass * gravityConst; // mass should be density??
+            Vector3 combinedForce = pressureForce + viscForce + gravityForce;
+            particles[i].GetComponent<Particle>().combinedForce = combinedForce;
+            particles[i].GetComponent<Particle>().velocity += Time.deltaTime * combinedForce / particles[i].GetComponent<Particle>().density;
+            particles[i].transform.position += Time.deltaTime * particles[i].GetComponent<Particle>().velocity;
         }
     }
 
@@ -70,7 +74,7 @@ public class ParticleManager : MonoBehaviour
     Vector3 calculatePressureForce(int i, int j){
         Vector3 distanceVector = particles[j].transform.position - particles[i].transform.position;
         Vector3 calculatedKernel = calculateSpikyKernel(distanceVector, smoothingRadius);
-        return -(particles[i].GetComponent<Particle>().mass / particles[i].GetComponent<Particle>().density) * calculatedKernel; //todo;
+        return -(particles[i].GetComponent<Particle>().mass / particles[i].GetComponent<Particle>().density) * calculatedKernel; 
     }
 
     Vector3 calculateViscForce(int i, int j){
