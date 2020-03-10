@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 7019301247875241390}
   - component: {fileID: 3664399032187221860}
   - component: {fileID: 7603155337785397188}
+  - component: {fileID: 1350054704703131294}
   m_Layer: 0
   m_Name: ParticlePrefab
-  m_TagString: Untagged
+  m_TagString: Particle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -93,3 +94,22 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1350054704703131294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8436454137736737820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 252d4d53a90316e46a40568db1c74dd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
+  combinedForce: {x: 0, y: 0, z: 0}
+  density: 10
+  mass: 10
+  pressure: 0
+  radius: 0.5

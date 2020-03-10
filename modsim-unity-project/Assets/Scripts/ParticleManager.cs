@@ -9,7 +9,7 @@ public class ParticleManager : MonoBehaviour
     public float restDensity = 10;
     public float gasConstant = 8.314f;
     public float viscosityConst = 1;
-    public float particleMass = 5;
+    public float particleMass = 10;
     public float smoothingRadius = 10;
     public float gravityConst = 9.82f;
 
@@ -36,9 +36,9 @@ public class ParticleManager : MonoBehaviour
         }
 
         for(int i = 0; i < particles.Length; i++){
-            Vector3 pressureForce;
-            Vector3 viscForce;
-            Vector3 gravityForce;
+            Vector3 pressureForce = Vector3.zero;
+            Vector3 viscForce = Vector3.zero;
+            Vector3 gravityForce = Vector3.zero;
 
             for(int j = 0; j < particles.Length; j++){
                 if(i != j){
