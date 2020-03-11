@@ -60,7 +60,7 @@ public class ParticleManager : MonoBehaviour
         float totalDensity = 0;
         for(int j = 0; j < particles.Length; j++) {
             float distanceBetween = Vector3.Distance(particles[index].transform.position, particles[j].transform.position);
-            if (index != j && distanceBetween < neighborRadius){ // Should index != j not be here????
+            if (distanceBetween < neighborRadius){ // Should index != j not be here????
                 totalDensity += particles[j].GetComponent<Particle>().mass * calculatePoly6Kernel(distanceBetween, smoothingRadius);
             }
         }
