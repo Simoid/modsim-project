@@ -23,6 +23,7 @@ public class ParticleManager : MonoBehaviour
         //Init particles
         for(int i = 0; i < particles.Length; i++){
             particles[i].GetComponent<Particle>().mass = particleMass;
+            particles[i].GetComponent<Particle>().density = restDensity; //todo
         }
     }
 
@@ -46,7 +47,8 @@ public class ParticleManager : MonoBehaviour
                     viscForce = calculateViscForce(i, j);
                 }
             }
-            gravityForce = new Vector3(0, -1, 0) * particles[i].GetComponent<Particle>().mass * gravityConst; // mass should be density??
+            //Todo: With gravityForce the particles fall with massive speed, so I multiplied it with 0.001f, fix this later...
+            gravityForce = new Vector3(0, -1, 0) * particles[i].GetComponent<Particle>().mass * gravityConst*0.001f; // mass should be density??
             Vector3 combinedForce = pressureForce + viscForce + gravityForce;
             particles[i].GetComponent<Particle>().combinedForce = combinedForce;
             particles[i].GetComponent<Particle>().velocity += Time.deltaTime * combinedForce / particles[i].GetComponent<Particle>().density;
@@ -56,13 +58,21 @@ public class ParticleManager : MonoBehaviour
 
     void setDensity(int index){
         float totalDensity = 0;
-        float distanceBetween = float.MaxValue;
-        for(int j = 0; j < particles.Length; j++){
-            if(index != j && distanceBetween < neighborRadius){ // Should index != j not be here????
+        for(int j = 0; j < particles.Length; j++) {
+            float distanceBetween = Vector3.Distance(particles[index].transform.position, particles[j].transform.position);
+            if (index != j && distanceBetween < neighborRadius){ // Should index != j not be here????
                 totalDensity += particles[j].GetComponent<Particle>().mass * calculatePoly6Kernel(distanceBetween, smoothingRadius);
             }
         }
         particles[index].GetComponent<Particle>().density = totalDensity;
+        /*
+         *  Todo: Here I set the density to restDensity if the 'totalDensity' is 0,
+         *  because otherwise we get null values. But this method might be wrong.
+         */       
+        if(Mathf.Abs(totalDensity) < 1e-10)
+        {
+            particles[index].GetComponent<Particle>().density = restDensity;
+        }
     }
 
     void setPressure(int index){
@@ -73,7 +83,10 @@ public class ParticleManager : MonoBehaviour
     // calc force from pressure
     Vector3 calculatePressureForce(int i, int j){
         Vector3 distanceVector = particles[j].transform.position - particles[i].transform.position;
+        //Debug.Log("d "+distanceVector);
         Vector3 calculatedKernel = calculateSpikyKernel(distanceVector, smoothingRadius);
+        //Debug.Log("m :" + particles[i].GetComponent<Particle>().mass);
+        //Debug.Log("d :" + particles[i].GetComponent<Particle>().density);
         return -(particles[i].GetComponent<Particle>().mass / particles[i].GetComponent<Particle>().density) * calculatedKernel; 
     }
 
