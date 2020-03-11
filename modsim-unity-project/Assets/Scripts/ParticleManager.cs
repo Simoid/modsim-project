@@ -43,12 +43,12 @@ public class ParticleManager : MonoBehaviour
 
             for(int j = 0; j < particles.Length; j++){
                 if(i != j){
-                    pressureForce = calculatePressureForce(i, j);
-                    viscForce = calculateViscForce(i, j);
+                    pressureForce += calculatePressureForce(i, j);
+                    viscForce += calculateViscForce(i, j);
                 }
             }
             //Todo: With gravityForce the particles fall with massive speed, so I multiplied it with 0.001f, fix this later...
-            gravityForce = new Vector3(0, -1, 0) * particles[i].GetComponent<Particle>().mass * gravityConst*0.001f; // mass should be density??
+            gravityForce = new Vector3(0, -1, 0) * particles[i].GetComponent<Particle>().mass * gravityConst; // mass should be density??
             Vector3 combinedForce = pressureForce + viscForce + gravityForce;
             particles[i].GetComponent<Particle>().combinedForce = combinedForce;
             particles[i].GetComponent<Particle>().velocity += Time.deltaTime * combinedForce / particles[i].GetComponent<Particle>().density;
@@ -66,13 +66,15 @@ public class ParticleManager : MonoBehaviour
         }
         particles[index].GetComponent<Particle>().density = totalDensity;
         /*
+        
          *  Todo: Here I set the density to restDensity if the 'totalDensity' is 0,
          *  because otherwise we get null values. But this method might be wrong.
-         */       
+             
         if(Mathf.Abs(totalDensity) < 1e-10)
         {
             particles[index].GetComponent<Particle>().density = restDensity;
         }
+        */
     }
 
     void setPressure(int index){
@@ -102,7 +104,7 @@ public class ParticleManager : MonoBehaviour
         float abs_r = Mathf.Abs(r);
 
         if(0 <= abs_r && abs_r <= h ){
-            return 315 / (64 * Mathf.PI * Mathf.Pow(h, 9)) * Mathf.Pow(Mathf.Pow(h, 2) - Mathf.Pow(abs_r, 2), 3);
+            return 315.0f / (64.0f * Mathf.PI * Mathf.Pow(h, 9)) * Mathf.Pow(Mathf.Pow(h, 2) - Mathf.Pow(abs_r, 2), 3);
         }else{
             return 0;
         }
@@ -114,7 +116,7 @@ public class ParticleManager : MonoBehaviour
         Vector3 r_norm = r.normalized; 
 
         if(0 <= r_mag && r_mag <= h ){
-            return -45 / (Mathf.PI * Mathf.Pow(h, 6)) * r_norm * Mathf.Pow(h - Mathf.Pow(r_mag, 2), 2);
+            return -45.0f / (Mathf.PI * Mathf.Pow(h, 6)) * r_norm * Mathf.Pow(h - Mathf.Pow(r_mag, 2), 2);
         }else{
             return Vector3.zero;
         }
@@ -125,7 +127,7 @@ public class ParticleManager : MonoBehaviour
         float abs_r = Mathf.Abs(r);
  
         if(0 <= abs_r && abs_r <= h ){
-            return 45 / (Mathf.PI * Mathf.Pow(h, 6)) * (h - abs_r);
+            return 45.0f / (Mathf.PI * Mathf.Pow(h, 6)) * (h - abs_r);
         }else{
             return 0;
         }
