@@ -51,9 +51,14 @@ public class ParticleManager : MonoBehaviour
             gravityForce = new Vector3(0, -1, 0) * particles[i].GetComponent<Particle>().mass * gravityConst; // mass should be density??
             Vector3 combinedForce = pressureForce + viscForce + gravityForce;
             particles[i].GetComponent<Particle>().combinedForce = combinedForce;
-            particles[i].GetComponent<Particle>().velocity += Time.deltaTime * combinedForce / particles[i].GetComponent<Particle>().density;
-            particles[i].transform.position += Time.deltaTime * particles[i].GetComponent<Particle>().velocity;
+            //particles[i].GetComponent<Particle>().velocity += Time.deltaTime * combinedForce / particles[i].GetComponent<Particle>().density;
+            particles[i].GetComponent<Rigidbody>().velocity += Time.deltaTime  * combinedForce / particles[i].GetComponent<Particle>().density;
+            //particles[i].transform.position += Time.deltaTime * particles[i].GetComponent<Particle>().velocity;
         }
+    }
+
+    void calculateCollision(){
+
     }
 
     void setDensity(int index){
@@ -61,7 +66,8 @@ public class ParticleManager : MonoBehaviour
         for(int j = 0; j < particles.Length; j++) {
             float distanceBetween = Vector3.Distance(particles[index].transform.position, particles[j].transform.position);
             if (distanceBetween < neighborRadius){ // Should index != j not be here????
-                totalDensity += particles[j].GetComponent<Particle>().mass * calculatePoly6Kernel(distanceBetween, smoothingRadius);
+                //totalDensity += particles[j].GetComponent<Particle>().mass * calculatePoly6Kernel(distanceBetween, smoothingRadius);
+                totalDensity += particleMass * (315.0f / (64.0f * Mathf.PI * Mathf.Pow(smoothingRadius, 9))) * Mathf.Pow(smoothingRadius - distanceBetween, 3);
             }
         }
         particles[index].GetComponent<Particle>().density = totalDensity;
@@ -86,10 +92,17 @@ public class ParticleManager : MonoBehaviour
     Vector3 calculatePressureForce(int i, int j){
         Vector3 distanceVector = particles[j].transform.position - particles[i].transform.position;
         //Debug.Log("d "+distanceVector);
-        Vector3 calculatedKernel = calculateSpikyKernel(distanceVector, smoothingRadius);
+        //Vector3 calculatedKernel = calculateSpikyKernel(distanceVector, smoothingRadius);
         //Debug.Log("m :" + particles[i].GetComponent<Particle>().mass);
         //Debug.Log("d :" + particles[i].GetComponent<Particle>().density);
-        return -(particles[i].GetComponent<Particle>().mass / particles[i].GetComponent<Particle>().density) * calculatedKernel; 
+        //return -(particles[i].GetComponent<Particle>().mass / particles[i].GetComponent<Particle>().density) * calculatedKernel; 
+        if(distanceVector.magnitude < smoothingRadius){
+            return -1 * (distanceVector.normalized) * particleMass * (particles[i].GetComponent<Particle>().pressure * particles[j].GetComponent<Particle>().pressure)
+                    / (2.0f * particles[j].GetComponent<Particle>().density) 
+                    * (-45.0f /(Mathf.PI * Mathf.Pow(smoothingRadius, 6))) * Mathf.Pow(smoothingRadius - distanceVector.magnitude, 2);
+        }else{
+            return Vector3.zero;
+        }
     }
 
     Vector3 calculateViscForce(int i, int j){
