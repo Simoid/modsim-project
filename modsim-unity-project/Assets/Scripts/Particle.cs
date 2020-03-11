@@ -11,4 +11,13 @@ public class Particle : MonoBehaviour
     public float mass;
     public float pressure;
     public float radius;
+
+    void OnCollisionEnter(Collision other)
+    {
+        velocity = GetComponent<Rigidbody>().velocity;
+        Debug.Log(other);
+    }
+
+    void calculateCollisions(){
+    }
 }
