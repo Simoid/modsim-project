@@ -44,10 +44,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particles: []
-  neighborRadius: 10
+  neighborRadius: 1
   restDensity: 10
   gasConstant: 8.314
-  viscosityConst: 1
-  particleMass: 5
+  viscosityConst: 0.0015
+  particleMass: 1
   smoothingRadius: 10
-  gravityConst: 9.82
+  gravityConst: 0.0982
