@@ -101,7 +101,7 @@ public class ParticleManager : MonoBehaviour
         if(distanceVector.magnitude < smoothingRadius){
             return -1 * (distanceVector.normalized) * particleMass * (particles[i].GetComponent<Particle>().pressure * particles[j].GetComponent<Particle>().pressure)
                     / (2.0f * particles[j].GetComponent<Particle>().density) 
-                    * (-45.0f /(Mathf.PI * Mathf.Pow(smoothingRadius, 6))) * Mathf.Pow(smoothingRadius - distanceVector.magnitude, 2);
+                    * (15.0f /(Mathf.PI * Mathf.Pow(smoothingRadius, 6))) * Mathf.Pow(smoothingRadius - distanceVector.magnitude, 3);
         }else{
             return Vector3.zero;
         }
