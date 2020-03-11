@@ -23,7 +23,7 @@ public class ParticleManager : MonoBehaviour
         //Init particles
         for(int i = 0; i < particles.Length; i++){
             particles[i].GetComponent<Particle>().mass = particleMass;
-            particles[i].GetComponent<Particle>().density = restDensity; //todo
+            particles[i].GetComponent<Particle>().density = 0; //todo
         }
     }
 
@@ -48,7 +48,7 @@ public class ParticleManager : MonoBehaviour
                 }
             }
             //Todo: With gravityForce the particles fall with massive speed, so I multiplied it with 0.001f, fix this later...
-            gravityForce = new Vector3(0, -1, 0) * particles[i].GetComponent<Particle>().mass * gravityConst; // mass should be density??
+            gravityForce = new Vector3(0, -1, 0) * particles[i].GetComponent<Particle>().density * gravityConst; // mass should be density??
             Vector3 combinedForce = pressureForce + viscForce + gravityForce;
             particles[i].GetComponent<Particle>().combinedForce = combinedForce;
             //particles[i].GetComponent<Particle>().velocity += Time.deltaTime * combinedForce / particles[i].GetComponent<Particle>().density;
@@ -67,10 +67,12 @@ public class ParticleManager : MonoBehaviour
             float distanceBetween = Vector3.Distance(particles[index].transform.position, particles[j].transform.position);
             if (distanceBetween < neighborRadius){ // Should index != j not be here????
                 //totalDensity += particles[j].GetComponent<Particle>().mass * calculatePoly6Kernel(distanceBetween, smoothingRadius);
-                totalDensity += particleMass * (315.0f / (64.0f * Mathf.PI * Mathf.Pow(smoothingRadius, 9))) * Mathf.Pow(smoothingRadius - distanceBetween, 3);
+                totalDensity += particleMass * (315.0f / (64.0f * Mathf.PI * Mathf.Pow(smoothingRadius, 9))) * Mathf.Pow(Mathf.Pow(smoothingRadius,2) - Mathf.Pow(distanceBetween,2), 3);
             }
         }
-        particles[index].GetComponent<Particle>().density = totalDensity;
+        float res_density = Mathf.Max(totalDensity, restDensity);
+        Debug.Log(restDensity);
+        particles[index].GetComponent<Particle>().density = res_density;
         /*
         
          *  Todo: Here I set the density to restDensity if the 'totalDensity' is 0,
@@ -130,7 +132,7 @@ public class ParticleManager : MonoBehaviour
 
         if(0 <= r_mag && r_mag <= h ){
             return -45.0f / (Mathf.PI * Mathf.Pow(h, 6)) * r_norm * Mathf.Pow(h - Mathf.Pow(r_mag, 2), 2);
-        }else{
+        } else {
             return Vector3.zero;
         }
     }
@@ -139,9 +141,9 @@ public class ParticleManager : MonoBehaviour
     float calculateViscKernel(float r, float h){
         float abs_r = Mathf.Abs(r);
  
-        if(0 <= abs_r && abs_r <= h ){
+        if(0 <= abs_r && abs_r <= h ) {
             return 45.0f / (Mathf.PI * Mathf.Pow(h, 6)) * (h - abs_r);
-        }else{
+        } else {
             return 0;
         }
     }
@@ -150,9 +152,9 @@ public class ParticleManager : MonoBehaviour
     float OLDcalculatePoly6KernelOld(float r, float h){
         float abs_r = Mathf.Abs(r);
 
-        if(0 <= abs_r && abs_r <= h ){
+        if(0 <= abs_r && abs_r <= h ) {
             return Mathf.Pow(Mathf.Pow(h, 2) - Mathf.Pow(abs_r, 2), 3);
-        }else{
+        } else {
             return 0;
         }
     }
