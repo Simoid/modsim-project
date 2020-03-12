@@ -13,6 +13,8 @@ public class ParticleManager : MonoBehaviour
     public float particleMass = 10;
     public float smoothingRadius = 10;
     public float gravityConst = 9.82f;
+    public float deltaTimeMult = 1;
+
 
     public void addParticle(GameObject particle){
         particle.GetComponent<Particle>().mass = particleMass;
@@ -55,42 +57,25 @@ public class ParticleManager : MonoBehaviour
                     viscForce += calculateViscForce(i, j);
                 }
             }
-            //Todo: With gravityForce the particles fall with massive speed, so I multiplied it with 0.001f, fix this later...
-            gravityForce = new Vector3(0, -1, 0) * particles[i].GetComponent<Particle>().density * gravityConst; // mass should be density??
+            gravityForce = new Vector3(0, -1, 0) * particles[i].GetComponent<Particle>().density * gravityConst;
             Vector3 combinedForce = pressureForce + viscForce + gravityForce;
             particles[i].GetComponent<Particle>().combinedForce = combinedForce;
-            //particles[i].GetComponent<Particle>().velocity += Time.deltaTime * combinedForce / particles[i].GetComponent<Particle>().density;
-            particles[i].GetComponent<Rigidbody>().velocity += Time.deltaTime  * combinedForce / particles[i].GetComponent<Particle>().density;
-            //particles[i].transform.position += Time.deltaTime * particles[i].GetComponent<Particle>().velocity;
+            particles[i].GetComponent<Rigidbody>().velocity += Time.deltaTime * deltaTimeMult * combinedForce / particles[i].GetComponent<Particle>().density;
         }
-    }
-
-    void calculateCollision(){
-
     }
 
     void setDensity(int index){
         float totalDensity = 0;
         for(int j = 0; j < particles.Count; j++) {
             float distanceBetween = Vector3.Distance(particles[index].transform.position, particles[j].transform.position);
-            if (distanceBetween < neighborRadius){ // Should index != j not be here????
-                //totalDensity += particles[j].GetComponent<Particle>().mass * calculatePoly6Kernel(distanceBetween, smoothingRadius);
+            if (distanceBetween < neighborRadius){ 
                 totalDensity += particleMass * (315.0f / (64.0f * Mathf.PI * Mathf.Pow(smoothingRadius, 9))) * Mathf.Pow(Mathf.Pow(smoothingRadius,2) - Mathf.Pow(distanceBetween,2), 3);
             }
         }
         float res_density = Mathf.Max(totalDensity, restDensity);
         Debug.Log(restDensity);
         particles[index].GetComponent<Particle>().density = res_density;
-        /*
-        
-         *  Todo: Here I set the density to restDensity if the 'totalDensity' is 0,
-         *  because otherwise we get null values. But this method might be wrong.
-             
-        if(Mathf.Abs(totalDensity) < 1e-10)
-        {
-            particles[index].GetComponent<Particle>().density = restDensity;
-        }
-        */
+
     }
 
     void setPressure(int index){
@@ -101,11 +86,6 @@ public class ParticleManager : MonoBehaviour
     // calc force from pressure
     Vector3 calculatePressureForce(int i, int j){
         Vector3 distanceVector = particles[j].transform.position - particles[i].transform.position;
-        //Debug.Log("d "+distanceVector);
-        //Vector3 calculatedKernel = calculateSpikyKernel(distanceVector, smoothingRadius);
-        //Debug.Log("m :" + particles[i].GetComponent<Particle>().mass);
-        //Debug.Log("d :" + particles[i].GetComponent<Particle>().density);
-        //return -(particles[i].GetComponent<Particle>().mass / particles[i].GetComponent<Particle>().density) * calculatedKernel; 
         if(distanceVector.magnitude < smoothingRadius){
             return -1 * (distanceVector.normalized) * particleMass * (particles[i].GetComponent<Particle>().pressure * particles[j].GetComponent<Particle>().pressure)
                     / (2.0f * particles[j].GetComponent<Particle>().density) 
@@ -154,20 +134,5 @@ public class ParticleManager : MonoBehaviour
         } else {
             return 0;
         }
-    }
-
-    //OLD FUNC
-    float OLDcalculatePoly6KernelOld(float r, float h){
-        float abs_r = Mathf.Abs(r);
-
-        if(0 <= abs_r && abs_r <= h ) {
-            return Mathf.Pow(Mathf.Pow(h, 2) - Mathf.Pow(abs_r, 2), 3);
-        } else {
-            return 0;
-        }
-    }
-
-    void setGameObjectPosition(){
-        return;
     }
 }

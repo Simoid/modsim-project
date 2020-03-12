@@ -238,8 +238,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 18525409}
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 5.51, y: 0, z: 1.78}
-  m_LocalScale: {x: 0.07936809, y: 197.2982, z: 145.86255}
+  m_LocalPosition: {x: 5.5, y: 0, z: 3.5}
+  m_LocalScale: {x: 3.2602332, y: 197.2982, z: 145.86255}
   m_Children: []
   m_Father: {fileID: 1570648249}
   m_RootOrder: 8
@@ -1681,8 +1681,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 164367657}
   m_LocalRotation: {x: -0, y: -0, z: 0, w: 1}
-  m_LocalPosition: {x: 28.37, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 121.473976, z: 10.88095}
+  m_LocalPosition: {x: 48.31, y: 0.17, z: 0}
+  m_LocalScale: {x: 40.88, y: 121.473976, z: 3.3959444}
   m_Children: []
   m_Father: {fileID: 1570648249}
   m_RootOrder: 6
@@ -3920,7 +3920,7 @@ GameObject:
   m_Component:
   - component: {fileID: 654425503}
   - component: {fileID: 654425504}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pipe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3958,6 +3958,8 @@ MonoBehaviour:
   praticlePrefab: {fileID: 8436454137736737820, guid: 836861993fe3eef429219d9d39aa82b4,
     type: 3}
   praticleManager: {fileID: 1367333663}
+  delay: 0.2
+  timer: 0
 --- !u!1001 &667479565
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4947,8 +4949,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 877691773}
   m_LocalRotation: {x: -0, y: -0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.71, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 121.473976, z: 11.089029}
+  m_LocalPosition: {x: -33.96, y: 0.28, z: 0}
+  m_LocalScale: {x: 59.49, y: 121.473976, z: 3.5141137}
   m_Children: []
   m_Father: {fileID: 1570648249}
   m_RootOrder: 2
@@ -5948,7 +5950,7 @@ GameObject:
   - component: {fileID: 1049815516}
   - component: {fileID: 1049815515}
   - component: {fileID: 1049815514}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6408,7 +6410,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1108683538
 Transform:
   m_ObjectHideFlags: 0
@@ -6416,13 +6418,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1108683537}
-  m_LocalRotation: {x: 0.10109, y: -0.69984347, z: 0.10109, w: 0.69984347}
-  m_LocalPosition: {x: 15.98, y: 0.98, z: 0.49}
+  m_LocalRotation: {x: 0.20473321, y: -0.67681926, z: 0.20473321, w: 0.67681926}
+  m_LocalPosition: {x: 20.4, y: -2.57, z: 0.49}
   m_LocalScale: {x: -5.480696, y: 1.6668036, z: 25.24007}
   m_Children: []
   m_Father: {fileID: 1570648249}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 16.439001, y: -90.00001, z: 0}
+  m_LocalEulerAnglesHint: {x: 33.66, y: -90.00001, z: 0}
 --- !u!65 &1108683539
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7575,7 +7577,7 @@ GameObject:
   - component: {fileID: 1299986322}
   - component: {fileID: 1299986321}
   - component: {fileID: 1299986320}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9466,8 +9468,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1569898357}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 18.83, y: -7.31, z: 0.49}
-  m_LocalScale: {x: -7.7211394, y: 0.56127, z: 77.408775}
+  m_LocalPosition: {x: 15.2, y: -35.71, z: -0.79}
+  m_LocalScale: {x: -5.1731634, y: 58.560406, z: 85.63672}
   m_Children: []
   m_Father: {fileID: 1570648249}
   m_RootOrder: 7
@@ -9779,8 +9781,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1624469115}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 18.83, y: 21.23, z: 0.49}
-  m_LocalScale: {x: -7.7211394, y: 0.56127, z: 77.408775}
+  m_LocalPosition: {x: 18.06, y: 40.799, z: 0.49}
+  m_LocalScale: {x: -2.3775704, y: 39.981346, z: 119.36621}
   m_Children: []
   m_Father: {fileID: 1570648249}
   m_RootOrder: 9
@@ -12817,13 +12819,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2066862730}
-  m_LocalRotation: {x: -0.16038959, y: -0.6886765, z: -0.16038959, w: 0.6886765}
-  m_LocalPosition: {x: 6.0150204, y: 13.35, z: 0.48587567}
-  m_LocalScale: {x: -4.7711806, y: 1.4259064, z: 25.24007}
+  m_LocalRotation: {x: -0.24465132, y: -0.6666836, z: -0.22903767, w: 0.66574806}
+  m_LocalPosition: {x: 6.582, y: 13.204, z: 0.048}
+  m_LocalScale: {x: -3.8885121, y: 1.4259064, z: 25.41675}
   m_Children: []
   m_Father: {fileID: 1570648249}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -26.220001, y: -90.00001, z: 0}
+  m_LocalEulerAnglesHint: {x: -39.135002, y: -90.63801, z: 1.57}
 --- !u!1001 &2070397901
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13019,17 +13021,17 @@ PrefabInstance:
     - target: {fileID: 2855231110608648516, guid: 9e9d1aa0cfb8b344c806aae3cd57bdaf,
         type: 3}
       propertyPath: smoothingRadius
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2855231110608648516, guid: 9e9d1aa0cfb8b344c806aae3cd57bdaf,
         type: 3}
       propertyPath: neighborRadius
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2855231110608648516, guid: 9e9d1aa0cfb8b344c806aae3cd57bdaf,
         type: 3}
       propertyPath: particleMass
-      value: 20
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 2855231110608648516, guid: 9e9d1aa0cfb8b344c806aae3cd57bdaf,
         type: 3}
@@ -13039,12 +13041,17 @@ PrefabInstance:
     - target: {fileID: 2855231110608648516, guid: 9e9d1aa0cfb8b344c806aae3cd57bdaf,
         type: 3}
       propertyPath: restDensity
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2855231110608648516, guid: 9e9d1aa0cfb8b344c806aae3cd57bdaf,
         type: 3}
       propertyPath: gravityConst
-      value: 9.82
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2855231110608648516, guid: 9e9d1aa0cfb8b344c806aae3cd57bdaf,
+        type: 3}
+      propertyPath: deltaTimeMult
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 7762766066103153808, guid: 9e9d1aa0cfb8b344c806aae3cd57bdaf,
         type: 3}
