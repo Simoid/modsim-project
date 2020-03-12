@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ParticleManager : MonoBehaviour
 {
-    public GameObject[] particles;
+    //public GameObject[] particles;
+    public List<GameObject> particles;
     public float neighborRadius = 10;
     public float restDensity = 10;
     public float gasConstant = 8.314f;
@@ -13,15 +14,22 @@ public class ParticleManager : MonoBehaviour
     public float smoothingRadius = 10;
     public float gravityConst = 9.82f;
 
-
+    public void addParticle(GameObject particle){
+        particle.GetComponent<Particle>().mass = particleMass;
+        particle.GetComponent<Particle>().density = 0; //todo
+        particles.Add(particle);
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        particles = GameObject.FindGameObjectsWithTag("Particle");
+        GameObject[] tempList = GameObject.FindGameObjectsWithTag("Particle");
 
+        for(int i = 0; i < tempList.Length; i++){
+            particles.Add(tempList[i]);
+        }
         //Init particles
-        for(int i = 0; i < particles.Length; i++){
+        for(int i = 0; i < particles.Count; i++){
             particles[i].GetComponent<Particle>().mass = particleMass;
             particles[i].GetComponent<Particle>().density = 0; //todo
         }
@@ -31,17 +39,17 @@ public class ParticleManager : MonoBehaviour
     void Update()
     {
         // For each particle, set density and pressure
-        for(int i = 0; i < particles.Length; i++){
+        for(int i = 0; i < particles.Count; i++){
             setDensity(i);
             setPressure(i);
         }
 
-        for(int i = 0; i < particles.Length; i++){
+        for(int i = 0; i < particles.Count; i++){
             Vector3 pressureForce = Vector3.zero;
             Vector3 viscForce = Vector3.zero;
             Vector3 gravityForce = Vector3.zero;
 
-            for(int j = 0; j < particles.Length; j++){
+            for(int j = 0; j < particles.Count; j++){
                 if(i != j){
                     pressureForce += calculatePressureForce(i, j);
                     viscForce += calculateViscForce(i, j);
@@ -63,7 +71,7 @@ public class ParticleManager : MonoBehaviour
 
     void setDensity(int index){
         float totalDensity = 0;
-        for(int j = 0; j < particles.Length; j++) {
+        for(int j = 0; j < particles.Count; j++) {
             float distanceBetween = Vector3.Distance(particles[index].transform.position, particles[j].transform.position);
             if (distanceBetween < neighborRadius){ // Should index != j not be here????
                 //totalDensity += particles[j].GetComponent<Particle>().mass * calculatePoly6Kernel(distanceBetween, smoothingRadius);
