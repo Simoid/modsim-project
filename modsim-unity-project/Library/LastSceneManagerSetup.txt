@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/SimonScene_1.0.unity
+- path: Assets/Scenes/BoxScene.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
